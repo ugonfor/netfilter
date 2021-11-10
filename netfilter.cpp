@@ -1,6 +1,4 @@
 #include "netfilter.hpp"
-#include "iphdr.hpp"
-#include "tcphdr.hpp"
 
 int cb(struct nfq_q_handle *qh, struct nfgenmsg *nfmsg,
 	      struct nfq_data *nfa, void *data)

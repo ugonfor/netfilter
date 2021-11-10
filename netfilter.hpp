@@ -17,6 +17,9 @@
 #include <string.h>
 using namespace std;
 
+#include "header/iphdr.hpp"
+#include "header/tcphdr.hpp"
+
 extern bool debug;
 extern bool quite;
 extern string arg_host;
