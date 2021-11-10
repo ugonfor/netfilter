@@ -1,7 +1,23 @@
-#include "netfilter.h"
+#include "netfilter.hpp"
 
+bool debug = false;
+string arg_host;
 int main(int argc, char **argv)
 {
+	// add usage
+	if(argc < 2){
+		printf("syntax : %s <host>\n", argv[0]);
+		printf("for debug mode, add -d option\n");
+		printf("sample : %s test.gilgil.net [-d]\n", argv[0]);
+		fputc('\n', stdout);
+	}
+	// debug mode
+	else if (argc == 3)
+		if(string(argv[2]) == "-d")
+			debug = true;
+
+	arg_host = string(argv[1]);
+	
 	struct nfq_handle *h;
 	struct nfq_q_handle *qh;
 	struct nfnl_handle *nh;
@@ -28,6 +44,7 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
+	// I modify cb(callback) function
 	printf("binding this socket to queue '0'\n");
 	qh = nfq_create_queue(h,  0, &cb, NULL);
 	if (!qh) {
