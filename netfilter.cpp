@@ -1,7 +1,15 @@
 #include "netfilter.h"
 
+int cb(struct nfq_q_handle *qh, struct nfgenmsg *nfmsg,
+	      struct nfq_data *nfa, void *data)
+{
+	u_int32_t id = print_pkt(nfa);
+	printf("entering callback\n");
+	return nfq_set_verdict(qh, id, NF_ACCEPT, 0, NULL);
+}
+
 /* returns packet id */
-static u_int32_t print_pkt (struct nfq_data *tb)
+u_int32_t print_pkt (struct nfq_data *tb)
 {
 	int id = 0;
 	struct nfqnl_msg_packet_hdr *ph;
@@ -47,9 +55,10 @@ static u_int32_t print_pkt (struct nfq_data *tb)
 		printf("physoutdev=%u ", ifi);
 
 	ret = nfq_get_payload(tb, &data);
-	if (ret >= 0)
+	if (ret >= 0){
 		printf("payload_len=%d\n", ret);
-
+		dump(data, ret);
+	}
 	fputc('\n', stdout);
 
 	return id;

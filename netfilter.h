@@ -8,6 +8,7 @@
 
 #include <libnetfilter_queue/libnetfilter_queue.h>
 
-
-static u_int32_t print_pkt (struct nfq_data *tb);
+u_int32_t print_pkt (struct nfq_data *tb);
 void dump(unsigned char* buf, int size);
+int cb(struct nfq_q_handle *qh, struct nfgenmsg *nfmsg,
+	      struct nfq_data *nfa, void *data);

@@ -1,5 +1,8 @@
-all:
-	gcc -o nfqnl_test main.cpp -lnetfilter_queue
+LDLIBS=-lnetfilter_queue
+
+all: netfilter
+	
+netfilter: main.o netfilter.o netfilter.h
 
 clean:
-	rm nfqnl_test
+	rm netfilter *.o
